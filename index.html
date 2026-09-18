@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-modo="atacado">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>CAUST Modas — Atacado e Varejo de Moda Feminina em Goiânia</title>
+  <meta name="description" content="Moda feminina no Goiás Center Modas, Goiânia. Vestido de festa, body, peça country e look elegante no atacado e varejo. Novidades toda semana." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="canonical" href="https://www.caustmodas.com.br/" />
+
+  <!-- Redes sociais / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="CAUST Modas — Atacado e Varejo em Goiânia" />
+  <meta property="og:description" content="Vestido de festa, body e peça country direto do Goiás Center Modas. Novidades toda semana." />
+  <meta property="og:image" content="img/marca/compartilhamento.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="img/marca/favicon.png" />
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Aplica o tema salvo ANTES da página pintar. Sem isto, quem
+       escolheu escuro vê um flash branco a cada carregamento. -->
+  <script>
+    (function () {
+      var t = "auto";
+      try {
+        var salvo = localStorage.getItem("caust_tema");
+        if (salvo === "claro" || salvo === "escuro") t = salvo;
+      } catch (e) { /* navegação privada */ }
+      document.documentElement.setAttribute("data-tema", t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/estilo.css?v=97911eee" />
+</head>
+<body>
+
+<!-- ============ CABEÇALHO ============ -->
+<header class="topo" id="topo">
+  <div class="container topo__interno">
+    <a href="#topo" class="marca" aria-label="CAUST — início">
+      <img src="img/marca/logo-web.png" alt="CAUST Modas"
+           class="marca__logo" width="346" height="220">
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <ul class="nav__links">
+        <li><a href="#colecao">Coleção</a></li>
+        <li><a href="#atacado">Atacado</a></li>
+        <li><a href="#sobre">A loja</a></li>
+        <li><a href="#local">Onde estamos</a></li>
+      </ul>
+        <div class="tema" role="group" aria-label="Aparência do site">
+          <button type="button" data-tema-btn="auto" aria-pressed="true"
+                  title="Automático" aria-label="Aparência: Automático">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <button type="button" data-tema-btn="claro" aria-pressed="false"
+                  title="Claro" aria-label="Aparência: Claro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
+          </button>
+          <button type="button" data-tema-btn="escuro" aria-pressed="false"
+                  title="Escuro" aria-label="Aparência: Escuro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+      <a href="#" class="btn btn--principal btn--pequeno" data-zap="principal">
+        Falar no WhatsApp
+      </a>
+
+      <button class="menu-btn" type="button" id="abrirMenu" aria-label="Abrir menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- Menu mobile -->
+<div class="menu-mobile" id="menuMobile" data-aberto="false" aria-hidden="true">
+  <div class="menu-mobile__topo">
+    <button class="menu-mobile__fechar" type="button" id="fecharMenu" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+  <ul>
+    <li><a href="#colecao">Coleção</a></li>
+    <li><a href="#atacado">Atacado</a></li>
+    <li><a href="#sobre">A loja</a></li>
+    <li><a href="#local">Onde estamos</a></li>
+  </ul>
+  <a href="#" class="btn btn--principal btn--bloco" data-zap="principal">Falar no WhatsApp</a>
+
+</div>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero__grade">
+      <div class="hero__conteudo">
+        <span class="olho">Goiás Center Modas · Goiânia</span>
+
+        <h1 class="hero__titulo">
+          Moda feminina com <em>giro rápido</em> para a sua loja
+        </h1>
+
+        <p class="hero__texto" data-texto-hero>
+          Vestido de festa, body, peça country e look elegante direto do maior
+          polo de confecção de Goiás. Grade que gira, com novidade toda semana.
+        </p>
+
+        <div class="hero__acoes">
+          <a href="#" class="btn btn--principal" data-zap="principal">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.61-1.21-3.07s.77-2.18 1.04-2.48c.27-.3.59-.37.79-.37.2 0 .39 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.02.96.3.15.49.22.56.35.07.12.07.72-.18 1.41z"/>
+            </svg>
+            Quero o catálogo
+          </a>
+          <a href="#colecao" class="btn btn--contorno">Ver as peças</a>
+        </div>
+
+        <div class="hero__selos">
+          <!-- Rótulo pequeno EM CIMA, resposta grande embaixo. Cada
+               par tem que ler como frase inteira de cima para baixo:
+               "Novas coleções / toda semana". Ao contrário, fica
+               "Semanal / novas coleções", que soa invertido. -->
+          <div class="selo">
+            <span class="selo__rotulo">Novas coleções</span>
+            <span class="selo__valor">Toda semana</span>
+          </div>
+          <!-- <<< CONFIRMAR com a cliente antes de publicar de verdade.
+               Se ela não enviar para fora, ou só enviar por um meio
+               específico, este selo precisa mudar ou sair. -->
+          <div class="selo">
+            <span class="selo__rotulo">Enviamos para</span>
+            <span class="selo__valor">Todo o Brasil</span>
+          </div>
+          <div class="selo">
+            <span class="selo__rotulo">Atendemos</span>
+            <span class="selo__valor">Atacado e varejo</span>
+          </div>
+          <div class="selo">
+            <span class="selo__rotulo">Loja física</span>
+            <span class="selo__valor">Venha conhecer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mosaico: trocar os "reservado" por <img src="img/produtos/..."> -->
+      <div class="hero__mosaico" aria-hidden="true">
+        <div class="hero__foto" data-foto-hero="1"></div>
+        <div class="hero__foto" data-foto-hero="2"></div>
+        <div class="hero__foto" data-foto-hero="3"></div>
+        <div class="hero__foto" data-foto-hero="4"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ALTERNADOR ATACADO / VAREJO ============ -->
+  <div class="modo">
+    <div class="container modo__interno">
+      <span class="modo__rotulo">Você está comprando</span>
+      <div class="alternador" role="group" aria-label="Escolha atacado ou varejo">
+        <button type="button" data-modo-btn="atacado" aria-pressed="true">
+          Para revender
+        </button>
+        <button type="button" data-modo-btn="varejo" aria-pressed="false">
+          Para mim
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ VANTAGENS ============ -->
+  <section class="secao">
+    <div class="container">
+      <div class="vantagens">
+        <div class="vantagem revela">
+          <div class="vantagem__icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <path d="M11.6 2.6H4.5a1.9 1.9 0 0 0-1.9 1.9v7.1c0 .5.2 1 .6 1.3l7.9 7.9a1.9 1.9 0 0 0 2.7 0l7.1-7.1a1.9 1.9 0 0 0 0-2.7l-7.9-7.9a1.9 1.9 0 0 0-1.4-.5z" stroke-linejoin="round"/><circle cx="7.8" cy="7.8" r="1.4"/>
+            </svg>
+          </div>
+          <h3>Preço de fábrica, margem de verdade</h3>
+          <p>Estamos dentro do Goiás Center Modas, o polo de confecção de Goiânia. Você compra na origem, sem atravessador comendo a sua margem.</p>
+        </div>
+
+        <div class="vantagem revela">
+          <div class="vantagem__icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <path d="M20.5 12a8.5 8.5 0 1 1-2.5-6" stroke-linecap="round"/><path d="M20.5 3.5V9H15" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Vitrine nova toda semana</h3>
+          <p>Coleção entrando sempre. Sua cliente volta porque tem novidade — e quem não repõe perde ela para quem repõe.</p>
+        </div>
+
+        <div class="vantagem revela so-atacado">
+          <div class="vantagem__icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <path d="M3 16.5V6.5a1 1 0 0 1 1-1h9.5a1 1 0 0 1 1 1v10" stroke-linejoin="round"/><path d="M14.5 9.5h3.2a1 1 0 0 1 .8.4l2.3 3a1 1 0 0 1 .2.6v3" stroke-linejoin="round"/><path d="M3 16.5h1.6M9.4 16.5h4.2M19.4 16.5H21" stroke-linecap="round"/><circle cx="7" cy="17.6" r="1.9"/><circle cx="17" cy="17.6" r="1.9"/>
+            </svg>
+          </div>
+          <h3>Sua cidade, sem sair de casa</h3>
+          <p>Não precisa vir a Goiânia para comprar bem. Você escolhe pelo WhatsApp, a gente separa e envia para todo o Brasil.</p>
+        </div>
+
+        <div class="vantagem revela so-varejo">
+          <div class="vantagem__icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <path d="M20.8 11.6a8.2 8.2 0 0 1-8.8 8.2 9.4 9.4 0 0 1-2.7-.4L3.2 21l1.6-4.3a8 8 0 0 1-1-4 8.2 8.2 0 0 1 8.2-8.2 8.2 8.2 0 0 1 8.8 7.1z" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Quem atende entende de roupa</h3>
+          <p>Montamos o look com você, acertamos o tamanho e falamos a verdade se a peça não ficou boa.</p>
+        </div>
+
+        <div class="vantagem revela">
+          <div class="vantagem__icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <path d="M3 17.5 8.5 12l3.8 3.8L20.5 7.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.8 7.5h5.7v5.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Peça que vende, não que encalha</h3>
+          <p>Só entra o que a cliente procura: vestido de festa, body, peça country e look elegante. Arara parada é prejuízo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CATÁLOGO ============ -->
+  <section class="secao secao--papel2" id="colecao">
+    <div class="container">
+      <div class="cabecalho-secao cabecalho-secao--centro revela">
+        <span class="olho">Coleção</span>
+        <h2>O que temos disponível agora</h2>
+        <p data-texto-catalogo>
+          Uma amostra do que você encontra na loja. Clique na peça para ver os
+          detalhes e chamar a gente no WhatsApp.
+        </p>
+      </div>
+
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar por categoria"></div>
+
+      <div class="produtos" id="produtos"></div>
+
+      <div class="catalogo__rodape revela">
+        <p>Chega peça nova toda semana — e nem tudo aparece aqui.</p>
+        <a href="#" class="btn btn--principal" data-zap="novidades">
+          Receber as novidades da semana
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAIXA DA LOJA ============ -->
+  <!-- Aparece só quando LOJA.fotos.interior estiver preenchido. -->
+  <section class="faixa" id="faixaLoja" hidden>
+    <div class="faixa__foto"><img id="faixaImg" src="" alt="Interior da loja CAUST no Goiás Center Modas"></div>
+    <div class="container faixa__conteudo revela">
+      <span class="olho">Sala 108 · Piso 1</span>
+      <h2>Arara cheia o ano inteiro</h2>
+      <p>
+        Estamos dentro do Goiás Center Modas, em Goiânia. Se você está na
+        cidade, vale a pena vir escolher pessoalmente — sempre tem peça que
+        ainda nem foi para o site.
+      </p>
+      <a href="#local" class="btn btn--claro">Como chegar</a>
+    </div>
+  </section>
+
+  <!-- ============ ATACADO ============ -->
+  <section class="secao secao--tinta" id="atacado">
+    <div class="container">
+      <div class="atacado__topo">
+        <div class="atacado__texto revela">
+        <span class="olho">Para lojistas e sacoleiras</span>
+        <h2>Compre no atacado direto de Goiânia</h2>
+        <p>
+          Se você revende roupa, a CAUST é o tipo de fornecedor que resolve:
+          peça com boa margem, reposição rápida e atendimento direto com quem
+          decide. Sem catálogo desatualizado e sem ficar no vácuo.
+        </p>
+
+        <ul class="lista-check">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Coleção nova toda semana, com as peças que estão saindo</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Você escolhe a grade que faz sentido para a sua cliente</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Atendimento no WhatsApp com foto e vídeo das peças</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Está em Goiânia? Venha conhecer a sala 108 e escolher pessoalmente</span>
+          </li>
+        </ul>
+
+        <a href="#" class="btn btn--claro" data-zap="atacado"
+           style="margin-top:2.2rem">
+          Falar com o atacado
+        </a>
+        </div><!-- /atacado__texto -->
+
+        <!-- Coluna direita: o passo a passo. É a dúvida que segura a
+             sacoleira antes de mandar a primeira mensagem. -->
+        <div class="atacado__como revela">
+          <h3 class="como__titulo">Como funciona</h3>
+          <ol class="passos" id="passosAtacado"></ol>
+        </div>
+      </div><!-- /atacado__topo -->
+
+      <!-- Condições em faixa larga, preenchidas a partir de LOJA.atacado -->
+      <div class="condicoes revela" id="condicoes"></div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE ============ -->
+  <section class="secao" id="sobre">
+    <div class="container duplo">
+      <div class="duplo__midia revela" data-foto-sobre></div>
+      <div class="revela">
+        <span class="olho">A loja</span>
+        <h2>A CAUST nasceu no meio da moda goiana</h2>
+        <p>
+          Estamos na sala 108 do Goiás Center Modas, em Goiânia, cercadas pelo
+          que há de mais novo na confecção do Centro-Oeste. Isso significa que a
+          peça chega na nossa arara antes de virar tendência na sua cidade.
+        </p>
+        <p>
+          Atendemos quem compra uma peça para arrasar no fim de semana e quem
+          leva dez para revender na segunda. Os dois recebem a mesma atenção.
+        </p>
+        <p>
+          Se você está em Goiânia, passe na loja. Se está longe, é só chamar no
+          WhatsApp que a gente manda foto e vídeo de tudo.
+        </p>
+
+        <div class="chamada__acoes" style="justify-content:flex-start; margin-top:1.8rem">
+          <a href="#" class="btn btn--contorno" data-instagram>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+            Ver o Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEPOIMENTOS ============ -->
+  <!-- Oculta enquanto DEPOIMENTOS_PUBLICADOS for false em dados.js -->
+  <section class="secao secao--papel2" id="secaoDepoimentos" hidden>
+    <div class="container">
+      <div class="cabecalho-secao cabecalho-secao--centro">
+        <span class="olho">Quem já comprou</span>
+        <h2>O que dizem sobre a CAUST</h2>
+      </div>
+
+      <div class="carrossel">
+        <button type="button" class="carrossel__seta carrossel__seta--ant"
+                id="depoAnt" aria-label="Depoimento anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="carrossel__trilho" id="depoimentos"
+             tabindex="0" role="region" aria-label="Depoimentos de clientes"></div>
+
+        <button type="button" class="carrossel__seta carrossel__seta--prox"
+                id="depoProx" aria-label="Próximo depoimento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="carrossel__pontos" id="depoPontos"></div>
+    </div>
+  </section>
+
+  <!-- ============ LOCALIZAÇÃO ============ -->
+  <section class="secao" id="local">
+    <div class="container">
+      <div class="cabecalho-secao revela">
+        <span class="olho">Onde estamos</span>
+        <h2>Venha conhecer a loja</h2>
+      </div>
+
+      <div class="local">
+        <div>
+          <div class="local__bloco">
+            <h3>Endereço</h3>
+            <p id="endereco"></p>
+          </div>
+
+          <div class="local__bloco">
+            <h3>Horário de funcionamento</h3>
+            <ul class="horarios" id="horarios"></ul>
+          </div>
+
+          <div class="local__bloco">
+            <h3>Contato</h3>
+            <p id="contato"></p>
+          </div>
+
+          <a href="#" class="btn btn--contorno" id="btnRota" target="_blank" rel="noopener">
+            Traçar rota no Google Maps
+          </a>
+        </div>
+
+        <div class="mapa revela">
+          <iframe
+            id="mapa"
+            title="Mapa da localização da CAUST no Goiás Center Modas"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAMADA FINAL ============ -->
+  <section class="secao secao--tinta chamada">
+    <div class="container">
+      <div class="cabecalho-secao cabecalho-secao--centro revela">
+        <span class="olho">Vamos conversar</span>
+        <h2 data-titulo-final>Pronta para renovar o estoque da sua loja?</h2>
+        <p data-texto-final>
+          Chame a gente no WhatsApp e receba as novidades da semana com preço de
+          atacado. Respondemos rápido, no horário comercial.
+        </p>
+      </div>
+      <div class="chamada__acoes">
+        <a href="#" class="btn btn--claro" data-zap="principal">
+          Chamar no WhatsApp
+        </a>
+        <a href="#" class="btn btn--contorno" data-instagram>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+          Seguir no Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ RODAPÉ ============ -->
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <img src="img/marca/logo-web.png" alt="CAUST Modas"
+             class="marca__logo marca__logo--rodape" width="346" height="220">
+        <p class="rodape__sobre">
+          Vestido de festa, body e peça country no atacado e varejo, dentro do
+          Goiás Center Modas, em Goiânia. Novidades toda semana.
+        </p>
+        <div class="social">
+          <a href="#" data-instagram aria-label="Instagram da CAUST">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="3.8"/>
+              <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="#" data-zap="principal" aria-label="WhatsApp da CAUST">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.61-1.21-3.07s.77-2.18 1.04-2.48c.27-.3.59-.37.79-.37.2 0 .39 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.02.96.3.15.49.22.56.35.07.12.07.72-.18 1.41z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="#colecao">Coleção</a></li>
+          <li><a href="#atacado">Atacado</a></li>
+          <li><a href="#sobre">A loja</a></li>
+          <li><a href="#local">Onde estamos</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contato</h4>
+        <ul id="rodapeContato"></ul>
+      </div>
+    </div>
+
+    <div class="rodape__base">
+      <span id="politica"></span>
+      <span>© <span id="ano"></span> CAUST Modas. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BOTÃO FLUTUANTE ============ -->
+<a href="#" class="zap-flutuante" data-zap="flutuante" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.61-1.21-3.07s.77-2.18 1.04-2.48c.27-.3.59-.37.79-.37.2 0 .39 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.02.96.3.15.49.22.56.35.07.12.07.72-.18 1.41z"/>
+  </svg>
+  <span>Fale conosco</span>
+</a>
+
+<!-- ============ MODAL DO PRODUTO ============ -->
+<div class="modal" id="modal" data-aberto="false" role="dialog" aria-modal="true" aria-labelledby="modalNome">
+  <div class="modal__fundo" data-fechar-modal></div>
+  <div class="modal__caixa">
+    <button class="modal__fechar" type="button" data-fechar-modal aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="modal__midia" id="modalMidia"></div>
+    <div class="modal__corpo">
+      <span class="olho" id="modalCategoria"></span>
+      <h2 id="modalNome" style="font-size:1.6rem"></h2>
+      <div class="modal__preco" id="modalPreco"></div>
+      <p id="modalDescricao" style="margin-top:1rem"></p>
+
+      <div class="modal__linha">
+        <strong>Tamanhos</strong>
+        <span id="modalTamanhos"></span>
+      </div>
+      <div class="modal__linha so-atacado">
+        <strong>Atacado</strong>
+        <span id="modalAtacado"></span>
+      </div>
+
+      <div class="modal__acoes">
+        <a href="#" class="btn btn--principal btn--bloco" id="modalZap">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.61-1.21-3.07s.77-2.18 1.04-2.48c.27-.3.59-.37.79-.37.2 0 .39 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.02.96.3.15.49.22.56.35.07.12.07.72-.18 1.41z"/>
+          </svg>
+          Tenho interesse nesta peça
+        </a>
+      </div>
+
+      <p class="modal__aviso" id="modalPolitica"></p>
+    </div>
+  </div>
+</div>
+
+<script src="js/dados.js?v=2275b686"></script>
+<script src="js/app.js?v=dacba2aa"></script>
+</body>
+</html>
