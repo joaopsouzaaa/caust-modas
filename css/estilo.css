@@ -2477,7 +2477,6 @@ body.travado { overflow: hidden; }
 @media (max-width: 760px) {
   .por-dentro__topo { flex-wrap: wrap; row-gap: 0.2rem; }
 }
-}
 
 /* ==============================================================
    TROCA "PARA REVENDER / PARA MIM"
@@ -2532,8 +2531,23 @@ body.travado { overflow: hidden; }
 }
 
 @media (max-width: 700px) {
-  .modo { padding-block: 0.9rem 1rem; }
-  .modo__interno { gap: 0.7rem; }
-  .modo__dica { margin-top: -0.15rem; font-size: 0.78rem; }
+  /* Compacta no celular: rótulo e botões na mesma linha, frase de
+     baixo numa linha só. Ocupava quase 170px da primeira tela. */
+  .modo { padding-block: 0.6rem 0.65rem; }
+  .modo__interno { gap: 0.35rem 0.6rem; }
+  .modo__rotulo {
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    line-height: 1.25;
+    max-width: 5.6rem;
+    text-align: right;
+  }
+  .alternador { padding: 3px; gap: 2px; }
+  .alternador button {
+    padding: 0.68rem 0.85rem;   /* ~36px de altura: ainda fácil de acertar */
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+  }
+  .modo__dica { margin-top: 0; font-size: 0.7rem; line-height: 1.3; }
 }
 

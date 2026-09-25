@@ -607,7 +607,7 @@
       selo3v: "Na loja física",
       selo4r: "Tamanhos e valores",
       selo4v: "No WhatsApp",
-      dica: "Compre a partir de 1 peça · prove na loja ou peça pelo WhatsApp",
+      dica: "A partir de 1 peça · prove na loja ou peça pelo WhatsApp",
       v1t: "Look de festa com preço justo",
       v1p:
         "Estamos dentro do Goiás Center Modas, o polo de confecção de Goiânia. " +
