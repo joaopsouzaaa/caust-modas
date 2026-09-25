@@ -1033,9 +1033,11 @@
 
   /* ---------- Fotos da loja --------------------------------- */
   /* Seção "A loja". As duas primeiras fotos ficam ao lado do texto
-     (a principal grande e a segunda sobreposta no canto); as outras
-     formam a faixa "Por dentro da loja" logo abaixo. Qualquer uma
-     abre no visor de tela cheia, e dali dá para passar por todas.  */
+     (a principal grande e a segunda sobreposta no canto). A faixa
+     "Por dentro da CAUST", logo abaixo, mostra TODAS, inclusive essas
+     duas: pouca gente toca no quadro de cima para descobrir que ele
+     amplia, e a faixa é onde a cliente passeia pela loja. Qualquer
+     foto abre no visor de tela cheia, e dali dá para passar por todas. */
 
   function montarGaleriaLoja(lista) {
     const sobre = $("[data-foto-sobre]");
@@ -1063,11 +1065,12 @@
     }
 
     if (faixa) {
-      const resto = lista.slice(2);
-      if (resto.length) {
-        faixa.innerHTML = resto
-          .map((f, i) => botao(f, i + 2, "loja-foto"))
+      if (lista.length) {
+        faixa.innerHTML = lista
+          .map((f, i) => botao(f, i, "loja-foto"))
           .join("");
+        // Mesma faixa das categorias: setas, teclado e arrastar com o mouse
+        montarCarrossel(faixa, null, $("#lojaAnt"), $("#lojaProx"));
       } else {
         const bloco = $(".por-dentro");
         if (bloco) bloco.hidden = true;

@@ -61,7 +61,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/estilo.css?v=1d688910" />
+  <link rel="stylesheet" href="css/estilo.css?v=0b745c97" />
 </head>
 <body>
 
@@ -431,8 +431,13 @@
       <div class="container por-dentro__topo revela">
         <h3>Por dentro da CAUST</h3>
         <span>Toque na foto para ampliar</span>
+        <div class="faixa-cat__setas">
+          <button type="button" class="carrossel__seta" id="lojaAnt" aria-label="Fotos anteriores da loja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="carrossel__seta" id="lojaProx" aria-label="Próximas fotos da loja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
       </div>
-      <div class="por-dentro__trilho revela" id="galeriaLoja"></div>
+      <div class="carrossel__trilho por-dentro__trilho revela" id="galeriaLoja"
+           tabindex="0" role="region" aria-label="Fotos da loja"></div>
     </div>
   </section>
 
@@ -650,6 +655,6 @@
 </div>
 
 <script src="js/dados.js?v=c60bff8d"></script>
-<script src="js/app.js?v=12886bd5"></script>
+<script src="js/app.js?v=052a5287"></script>
 </body>
 </html>

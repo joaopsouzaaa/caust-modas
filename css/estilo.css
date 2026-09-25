@@ -2434,19 +2434,28 @@ body.travado { overflow: hidden; }
   color: var(--tinta-suave);
 }
 
-/* No computador as cinco cabem lado a lado; no celular rolam
-   na horizontal e sangram até a borda, como o catálogo. */
+/* Faixa rolando na horizontal em qualquer tela, igual ao catálogo:
+   com as sete fotos lado a lado no computador, cada uma ficava com
+   uns 140px e perdia a graça. Sangra até a borda para o corte da
+   última foto avisar que tem mais. */
 .por-dentro__trilho {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
+  padding-inline: max(
+    var(--gutter),
+    calc((100% - var(--max)) / 2 + var(--gutter))
+  );
+  scroll-padding-inline: max(
+    var(--gutter),
+    calc((100% - var(--max)) / 2 + var(--gutter))
+  );
+  padding-block: 2px 6px;
   gap: clamp(0.7rem, 1.8vw, 1.2rem);
-  max-width: var(--max);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
 }
 
+.por-dentro__topo .faixa-cat__setas { margin-left: auto; }
+
 .loja-foto {
+  flex: 0 0 clamp(150px, 44vw, 270px);
+  scroll-snap-align: start;
   border: 0;
   aspect-ratio: 3 / 4;
   overflow: hidden;
@@ -2467,16 +2476,7 @@ body.travado { overflow: hidden; }
 
 @media (max-width: 760px) {
   .por-dentro__topo { flex-wrap: wrap; row-gap: 0.2rem; }
-  .por-dentro__trilho {
-    grid-auto-columns: clamp(150px, 44vw, 220px);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gutter);
-    scrollbar-width: none;
-    padding-block: 2px;
-  }
-  .por-dentro__trilho::-webkit-scrollbar { display: none; }
-  .loja-foto { scroll-snap-align: start; }
+}
 }
 
 /* ==============================================================
