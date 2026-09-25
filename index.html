@@ -44,7 +44,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/estilo.css?v=20ea2e23" />
+  <link rel="stylesheet" href="css/estilo.css?v=1d688910" />
 </head>
 <body>
 
@@ -112,6 +112,28 @@
 
 <main>
 
+  <!-- ============ ALTERNADOR ATACADO / VAREJO ============ -->
+  <!-- Fica ACIMA do topo de propósito. Embaixo dele, a cliente
+       tocava e não via o título, o texto e as fotos mudando lá em
+       cima (no celular o topo já tinha saído da tela). Aqui em cima,
+       tudo o que muda fica abaixo do dedo dela. -->
+  <div class="modo">
+    <div class="container modo__interno">
+      <span class="modo__rotulo">Você está comprando</span>
+      <div class="alternador" role="group" aria-label="Escolha atacado ou varejo">
+        <button type="button" data-modo-btn="atacado" aria-pressed="true">
+          Para revender
+        </button>
+        <button type="button" data-modo-btn="varejo" aria-pressed="false">
+          Para mim
+        </button>
+      </div>
+      <p class="modo__dica troca-modo" data-modo-texto="dica" aria-live="polite">
+        Mínimo de 6 peças · pagamento no cartão, dinheiro ou Pix
+      </p>
+    </div>
+  </div>
+
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="container hero__grade">
@@ -122,11 +144,11 @@
              "Para revender / Para mim". Os textos de cada modo ficam em
              TEXTOS, no app.js; o que está aqui é o do atacado, que vale
              enquanto o JavaScript não carrega. -->
-        <h1 class="hero__titulo" data-modo-texto="titulo">
+        <h1 class="hero__titulo troca-modo" data-modo-texto="titulo">
           Moda feminina com <em>giro rápido</em> para a sua loja
         </h1>
 
-        <p class="hero__texto" data-modo-texto="hero">
+        <p class="hero__texto troca-modo" data-modo-texto="hero">
           Vestido de festa, conjunto e look elegante direto do maior polo de
           confecção de Goiás. Peça que sai rápido, com novidade toda semana.
         </p>
@@ -175,24 +197,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ ALTERNADOR ATACADO / VAREJO ============ -->
-  <div class="modo">
-    <div class="container modo__interno">
-      <span class="modo__rotulo">Você está comprando</span>
-      <div class="alternador" role="group" aria-label="Escolha atacado ou varejo">
-        <button type="button" data-modo-btn="atacado" aria-pressed="true">
-          Para revender
-        </button>
-        <button type="button" data-modo-btn="varejo" aria-pressed="false">
-          Para mim
-        </button>
-      </div>
-      <p class="modo__dica troca-modo" data-modo-texto="dica" aria-live="polite">
-        Mínimo de 6 peças · pagamento no cartão, dinheiro ou Pix
-      </p>
-    </div>
-  </div>
 
   <!-- ============ VANTAGENS ============ -->
   <section class="secao">

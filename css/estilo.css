@@ -2522,3 +2522,18 @@ body.travado { overflow: hidden; }
 .hero__foto-btn:hover img { transform: scale(1.04); }
 .hero__foto-btn:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
 
+/* Seletor agora logo abaixo do menu, antes do topo. Os dois são
+   pretos: o fio dourado bem fraco separa um do outro, senão a faixa
+   parece parte do menu. No celular fica mais baixa, para o título
+   continuar aparecendo na primeira tela. */
+.modo {
+  margin-top: 0;
+  border-top: 1px solid rgba(224, 160, 8, 0.22);
+}
+
+@media (max-width: 700px) {
+  .modo { padding-block: 0.9rem 1rem; }
+  .modo__interno { gap: 0.7rem; }
+  .modo__dica { margin-top: -0.15rem; font-size: 0.78rem; }
+}
+
