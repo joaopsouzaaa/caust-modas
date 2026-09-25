@@ -278,6 +278,8 @@
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">' +
     '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+  let desligarFaixas = [];
+
   function montarProdutos() {
     const alvo = $("#categorias");
     if (!alvo) return;
@@ -318,9 +320,10 @@
       .join("");
 
     // Liga o carrossel de cada faixa
-    ativas.forEach(function (cat) {
+    desligarFaixas.forEach((f) => f());
+    desligarFaixas = ativas.map(function (cat) {
       const id = slug(cat);
-      montarCarrossel(
+      return montarCarrossel(
         $("#trilho-" + id),
         null,
         $('[data-ant="' + id + '"]'),
@@ -551,11 +554,39 @@
 
   /* ---------- Modo atacado / varejo ------------------------- */
 
+  // Cada chave aqui corresponde a um data-modo-texto="chave" no
+  // index.html. O conteúdo entra como HTML (por causa do <em> no
+  // título), então é texto nosso, nunca coisa digitada pela visitante.
   const TEXTOS = {
     atacado: {
+      titulo: "Moda feminina com <em>giro rápido</em> para a sua loja",
       hero:
-        "Vestido de festa, body, peça country e look elegante direto do maior polo " +
-        "de confecção de Goiás. Grade que gira, com novidade toda semana.",
+        "Vestido de festa, conjunto e look elegante direto do maior polo de " +
+        "confecção de Goiás. Peça que sai rápido, com novidade toda semana.",
+      botaoHero: "Quero o catálogo",
+      selo2r: "Pedido mínimo",
+      selo2v: "6 peças",
+      selo3r: "Envio por",
+      selo3v: "Transportadora",
+      selo4r: "Loja física",
+      selo4v: "Sala 108",
+      dica: "Mínimo de 6 peças · pagamento no cartão, dinheiro ou Pix",
+      v1t: "Preço de fábrica, margem de verdade",
+      v1p:
+        "Estamos dentro do Goiás Center Modas, o polo de confecção de Goiânia. " +
+        "Você compra na origem, sem atravessador comendo a sua margem.",
+      v2t: "Vitrine nova toda semana",
+      v2p:
+        "Coleção entrando sempre. Sua cliente volta porque tem novidade — e quem " +
+        "não repõe perde ela para quem repõe.",
+      v3t: "Sua cidade, sem sair de casa",
+      v3p:
+        "Não precisa vir a Goiânia para comprar bem. Você escolhe pelo WhatsApp, " +
+        "a gente separa e despacha por transportadora.",
+      v4t: "Peça que vende, não que encalha",
+      v4p:
+        "Só entra o que a cliente procura: vestido de festa, conjunto e look " +
+        "elegante. Arara parada é prejuízo.",
       catalogo:
         "Uma amostra do que você leva para a sua loja. Clique na peça para ver " +
         "todas as fotos e vídeos e pedir tamanhos e valor de atacado no WhatsApp.",
@@ -565,9 +596,34 @@
         "atacado. Respondemos rápido, no horário comercial.",
     },
     varejo: {
+      titulo: "Looks para você <em>brilhar</em> em qualquer ocasião",
       hero:
-        "Vestido de festa, body, peça country e look elegante escolhidos a dedo. " +
-        "Venha conhecer a loja no Goiás Center Modas ou chame no WhatsApp.",
+        "Vestido de festa, conjunto e look elegante escolhidos a dedo. Prove na " +
+        "nossa loja no Goiás Center Modas ou consulte tamanhos e valores pelo WhatsApp.",
+      botaoHero: "Falar no WhatsApp",
+      selo2r: "Compre a partir de",
+      selo2v: "1 peça",
+      selo3r: "Provador",
+      selo3v: "Na loja física",
+      selo4r: "Tamanhos e valores",
+      selo4v: "No WhatsApp",
+      dica: "Compre a partir de 1 peça · prove na loja ou peça pelo WhatsApp",
+      v1t: "Look de festa com preço justo",
+      v1p:
+        "Estamos dentro do Goiás Center Modas, o polo de confecção de Goiânia. " +
+        "Você compra perto de onde a roupa é feita, e isso aparece no preço.",
+      v2t: "Sempre tem novidade",
+      v2p:
+        "Coleção nova chega toda semana. Cada vez que você volta, tem peça que " +
+        "ainda não viu.",
+      v3t: "Quem atende entende de roupa",
+      v3p:
+        "Montamos o look com você, acertamos o tamanho e falamos a verdade se a " +
+        "peça não ficou boa.",
+      v4t: "Peça que valoriza você",
+      v4p:
+        "Vestido de festa, conjunto e look elegante com modelagem que veste bem " +
+        "e acabamento caprichado.",
       catalogo:
         "Uma amostra do que você encontra na loja. Clique na peça para ver " +
         "todas as fotos e vídeos e consultar tamanhos e valores no WhatsApp.",
@@ -577,6 +633,42 @@
         "passe na loja para experimentar.",
     },
   };
+
+  // Fotos do mosaico do topo para o modo atual. Sem LOJA.fotos.topo
+  // configurado, cai nas peças marcadas como destaque.
+  function fotosDoTopo() {
+    const topo = (LOJA.fotos && LOJA.fotos.topo) || {};
+    if (topo[modo] && topo[modo].length) return topo[modo];
+    return PRODUTOS.filter((p) => p.destaque && capaDaPeca(p))
+      .map((p) => ({ src: capaDaPeca(p), alt: p.nome }));
+  }
+
+  function montarMosaico() {
+    const fotos = fotosDoTopo();
+    $$("[data-foto-hero]").forEach(function (slot, i) {
+      const f = fotos[i];
+      slot.innerHTML = f
+        ? '<img src="' + f.src + '" alt="' + f.alt + '">'
+        : reservado("Foto " + (i + 1));
+    });
+  }
+
+  // Baixa já as fotos do outro modo: na hora do toque a troca é
+  // instantânea, sem piscar o quadro vazio.
+  function precarregarOutroModo() {
+    const topo = (LOJA.fotos && LOJA.fotos.topo) || {};
+    const outro = topo[modo === "atacado" ? "varejo" : "atacado"] || [];
+    outro.forEach(function (f) { const im = new Image(); im.src = f.src; });
+  }
+
+  // Pisca de leve o que mudou, para a troca ser percebida
+  function sinalizarTroca() {
+    $$(".troca-modo").forEach(function (el) {
+      el.classList.remove("trocou");
+      void el.offsetWidth;            // reinicia a animação
+      el.classList.add("trocou");
+    });
+  }
 
   function aplicarModo(novo, avisar) {
     modo = novo;
@@ -589,19 +681,26 @@
     );
 
     const t = TEXTOS[modo];
-    const heroP = $("[data-texto-hero]");
+    $$("[data-modo-texto]").forEach(function (el) {
+      const valor = t[el.dataset.modoTexto];
+      if (valor != null) el.innerHTML = valor;
+    });
+
     const catP = $("[data-texto-catalogo]");
     const tFinal = $("[data-titulo-final]");
     const pFinal = $("[data-texto-final]");
-    if (heroP) heroP.textContent = t.hero;
     if (catP) catP.textContent = t.catalogo;
     if (tFinal) tFinal.textContent = t.tituloFinal;
     if (pFinal) pFinal.textContent = t.textoFinal;
 
+    montarMosaico();
     montarProdutos();
     atualizarLinks();   // o modo decide para qual WhatsApp o botão leva
 
-    if (avisar) evento("EscolheuModo", { modo: modo });
+    if (avisar) {
+      sinalizarTroca();
+      evento("EscolheuModo", { modo: modo });
+    }
   }
 
   /* ---------- Condições de atacado -------------------------- */
@@ -762,7 +861,7 @@
 
   function montarCarrossel(trilho, pontos, ant, prox) {
     const itens = Array.prototype.slice.call(trilho.children);
-    if (!itens.length) return;
+    if (!itens.length) return function () {};
 
     ligarArrasto(trilho);
 
@@ -837,6 +936,10 @@
 
     window.addEventListener("resize", atualizar, { passive: true });
     atualizar();
+
+    // Quem remonta o trilho (troca de modo) chama isto antes, senão
+    // os avisos de resize se acumulam presos a faixas que já saíram.
+    return function () { window.removeEventListener("resize", atualizar); };
   }
 
   /* ---------- Localização e contato ------------------------- */
@@ -955,15 +1058,7 @@
   function montarHero() {
     const fotos = LOJA.fotos || {};
 
-    // Mosaico do topo: usa as peças em destaque que já têm foto.
-    const comFoto = PRODUTOS.filter((p) => p.destaque && capaDaPeca(p));
-
-    $$("[data-foto-hero]").forEach(function (slot, i) {
-      const p = comFoto[i];
-      slot.innerHTML = p
-        ? '<img src="' + capaDaPeca(p) + '" alt="' + p.nome + '">'
-        : reservado("Foto " + (i + 1));
-    });
+    // O mosaico do topo é montado em aplicarModo(): muda com o modo.
 
     montarGaleriaLoja(fotos.galeriaLoja || []);
 
@@ -1126,6 +1221,7 @@
     montarLocal();
     aplicarModo(modo, false);
     ligarEventos();
+    window.addEventListener("load", precarregarOutroModo);
     observarRevelacao();
 
     // Aviso no console para quem for publicar sem configurar.

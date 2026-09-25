@@ -2478,3 +2478,31 @@ body.travado { overflow: hidden; }
   .por-dentro__trilho::-webkit-scrollbar { display: none; }
   .loja-foto { scroll-snap-align: start; }
 }
+
+/* ==============================================================
+   TROCA "PARA REVENDER / PARA MIM"
+   --------------------------------------------------------------
+   Antes só mudava o terceiro card das vantagens, e no celular a
+   cliente tinha que rolar para ver. Agora a frase logo abaixo do
+   seletor, as fotos do topo e os quatro cards mudam juntos, e
+   piscam de leve na troca para ela perceber o que mudou.
+   ============================================================== */
+
+.modo__dica {
+  flex-basis: 100%;
+  margin: -0.4rem 0 0;
+  font-size: 0.82rem;
+  color: var(--acento-claro);
+  letter-spacing: 0.02em;
+}
+
+@keyframes trocaModo {
+  from { opacity: 0.25; transform: translateY(6px); }
+  to   { opacity: 1;    transform: none; }
+}
+
+.troca-modo.trocou { animation: trocaModo 450ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .troca-modo.trocou { animation: none; }
+}

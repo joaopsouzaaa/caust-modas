@@ -12,7 +12,7 @@ const LOJA = {
   nomeCompleto: "Caust Modas",
   slogan: "Moda feminina direto do Goiás Center Modas",
   descricaoCurta:
-    "Atacado e varejo em Goiânia. Novidades toda semana em vestido de festa, body, peça country e look elegante.",
+    "Atacado e varejo em Goiânia. Novidades toda semana em vestido de festa, conjunto e look elegante.",
 
   // --- WhatsApp ------------------------------------------------
   // numero: 55 + DDD + número, só dígitos. Ex: 5562999998888
@@ -71,6 +71,26 @@ const LOJA = {
   // --- Fotos da loja física ------------------------------------
   // Coloque os arquivos em  site/img/loja/  e aponte o caminho aqui.
   fotos: {
+    // Mosaico do topo, um jogo de 4 fotos para cada modo. Troca na
+    // hora em que a cliente toca em "Para revender" / "Para mim".
+    // Ordem das caixas: 1 alta à esquerda, 2 pequena à direita,
+    // 3 alta à direita, 4 pequena à esquerda. Nas pequenas o recorte
+    // puxa para o alto, então use foto com o rosto na parte de cima.
+    topo: {
+      atacado: [
+        { src: "img/produtos/vestido-longo-poa-02.jpg", alt: "Vestido longo poá em off-white e marrom" },
+        { src: "img/produtos/conjunto-top-faixa-e-saia-com-strass-01.jpg", alt: "Conjunto top faixa e saia com strass" },
+        { src: "img/produtos/vestido-corset-em-tela-rosa-02.jpg", alt: "Vestido corset em tela rosa" },
+        { src: "img/produtos/conjunto-poa-marrom-gola-alta-01.jpg", alt: "Conjunto poá marrom gola alta" },
+      ],
+      varejo: [
+        { src: "img/produtos/vestido-gola-alta-pink-01.jpg", alt: "Vestido gola alta pink" },
+        { src: "img/produtos/vestido-longo-vermelho-manga-unica-01.jpg", alt: "Vestido longo vermelho manga única" },
+        { src: "img/produtos/vestido-longo-estampado-azul-manga-bufante-02.jpg", alt: "Vestido longo estampado azul manga bufante" },
+        { src: "img/produtos/vestido-corset-com-tule-branco-01.jpg", alt: "Vestido corset com tule branco" },
+      ],
+    },
+
     // Galeria da seção "A loja". A PRIMEIRA sai grande, as outras
     // em mosaico ao lado. Clicando, abre em tela cheia.
     // "legenda" vira o texto alternativo e aparece na foto ampliada.
