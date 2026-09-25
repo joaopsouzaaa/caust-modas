@@ -643,14 +643,43 @@
       .map((p) => ({ src: capaDaPeca(p), alt: p.nome }));
   }
 
+  // Cada foto do topo é um botão: abre a peça dela, com todas as
+  // fotos, o vídeo e o botão do WhatsApp. Se a foto não for de
+  // nenhuma peça cadastrada, abre só a imagem em tela cheia.
   function montarMosaico() {
     const fotos = fotosDoTopo();
     $$("[data-foto-hero]").forEach(function (slot, i) {
       const f = fotos[i];
       slot.innerHTML = f
-        ? '<img src="' + f.src + '" alt="' + f.alt + '">'
+        ? '<button type="button" class="hero__foto-btn" data-foto-topo="' + i + '" ' +
+          'aria-label="Ver a peça: ' + f.alt + '">' +
+          '<img src="' + f.src + '" alt="' + f.alt + '"></button>'
         : reservado("Foto " + (i + 1));
     });
+  }
+
+  function abrirFotoDoTopo(i) {
+    const f = fotosDoTopo()[i];
+    if (!f) return;
+    const indice = PRODUTOS.findIndex(function (p) {
+      return capaDaPeca(p) === f.src ||
+        (p.fotos || []).indexOf(f.src) >= 0 ||
+        (p.videos || []).some((v) => capaDoVideo(v) === f.src);
+    });
+    evento("ClicouFotoTopo", { foto: i + 1, modo: modo });
+    if (indice >= 0) {
+      abrirModal(indice);
+      // Abre já na foto clicada, não na capa da peça
+      const n = (PRODUTOS[indice].fotos || []).indexOf(f.src);
+      const trilho = $("#modalMidia .galeria__trilho");
+      if (n > 0 && trilho) {
+        window.requestAnimationFrame(function () {
+          trilho.scrollTo({ left: n * trilho.clientWidth, behavior: "auto" });
+        });
+      }
+    } else {
+      abrirVisor([{ tipo: "foto", src: f.src, legenda: f.alt }], f.alt, 0);
+    }
   }
 
   // Baixa já as fotos do outro modo: na hora do toque a troca é
@@ -1092,19 +1121,39 @@
       return;
     }
 
+    // Surge toda vez que a pessoa desce, não só na primeira visita.
+    // O que sai da tela POR BAIXO (ela voltou para cima) se rearma e
+    // surge de novo na próxima descida. O que sai por CIMA fica como
+    // está: subindo, nada some nem pisca, só descendo é que anima.
     const obs = new IntersectionObserver(
       function (entradas) {
         entradas.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add("visivel");
-            obs.unobserve(e.target);
-          }
+          if (e.isIntersecting) e.target.classList.add("visivel");
         });
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
 
     alvos.forEach((a) => obs.observe(a));
+
+    // O rearme é conferido a cada rolagem, e não pelo observador: num
+    // salto (menu, "voltar ao topo", arrastada forte) o elemento vai de
+    // acima da tela para abaixo dela sem passar por dentro, e o
+    // observador não avisa nada. Aqui ele se rearma de qualquer jeito.
+    let pendente = false;
+    window.addEventListener("scroll", function () {
+      if (pendente) return;
+      pendente = true;
+      window.requestAnimationFrame(function () {
+        pendente = false;
+        const fundo = window.innerHeight;
+        alvos.forEach(function (a) {
+          if (a.classList.contains("visivel") && a.getBoundingClientRect().top > fundo) {
+            a.classList.remove("visivel");
+          }
+        });
+      });
+    }, { passive: true });
   }
 
   /* ---------- Eventos gerais -------------------------------- */
@@ -1138,6 +1187,12 @@
         if (ev.target.closest("a")) estadoMenu(false);
       });
     }
+
+    // Foto do topo
+    document.addEventListener("click", function (ev) {
+      const b = ev.target.closest("[data-foto-topo]");
+      if (b) abrirFotoDoTopo(Number(b.dataset.fotoTopo));
+    });
 
     // Abrir produto
     document.addEventListener("click", function (ev) {
