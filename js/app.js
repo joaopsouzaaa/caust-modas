@@ -152,12 +152,29 @@
 
   /* ---------- Utilidades ------------------------------------ */
 
-  function preco(valor) {
-    if (!valor || valor <= 0) return null;
-    return valor.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
+  // O site não mostra preço nem tamanho: tudo é tratado no WhatsApp.
+  const CONSULTA = "Tamanhos e valores no WhatsApp";
+
+  // Capa de vídeo: mesmo nome do arquivo, com .jpg
+  function capaDoVideo(src) {
+    return src.replace(/\.[a-z0-9]+$/i, ".jpg");
+  }
+
+  // Fotos primeiro, depois os vídeos, na ordem do dados.js
+  function midiasDaPeca(p) {
+    const fotos = (p.fotos || []).map((src) => ({ tipo: "foto", src: src }));
+    const videos = (p.videos || []).map((src) => ({
+      tipo: "video",
+      src: src,
+      capa: capaDoVideo(src),
+    }));
+    return fotos.concat(videos);
+  }
+
+  function capaDaPeca(p) {
+    if (p.fotos && p.fotos.length) return p.fotos[0];
+    if (p.videos && p.videos.length) return capaDoVideo(p.videos[0]);
+    return "";
   }
 
   // Espaço reservado elegante para quando ainda não temos a foto.
@@ -182,7 +199,8 @@
   }
 
   const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+  const $$ = (sel, raiz) =>
+    Array.prototype.slice.call((raiz || document).querySelectorAll(sel));
 
   /* ---------- Catálogo -------------------------------------- */
   /* Uma faixa por categoria, cada uma rolando na horizontal.
@@ -221,25 +239,38 @@
       .replace(/^-|-$/g, "");
   }
 
+  const ICONE_FOTO =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">' +
+    '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg>';
+  const ICONE_PLAY =
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+
+  // Selo no canto do card: avisa que tem mais foto e vídeo lá dentro.
+  // Sem ele a cliente não descobre que dá para ver a peça de outros ângulos.
+  function seloMidias(p) {
+    const nFotos = (p.fotos || []).length;
+    const nVideos = (p.videos || []).length;
+    if (nFotos < 2 && !nVideos) return "";
+    let html = '<span class="card__qtd">';
+    if (nFotos > 1) html += ICONE_FOTO + nFotos;
+    if (nVideos) html += ICONE_PLAY + (nVideos > 1 ? nVideos : "Vídeo");
+    return html + "</span>";
+  }
+
   function cardProduto(p) {
     const indice = PRODUTOS.indexOf(p);
-    const valor = modo === "atacado" ? p.precoAtacado : p.preco;
-    const texto = preco(valor);
-    const rotulo = modo === "atacado" ? "Preço de atacado" : "Preço de varejo";
 
     return (
       '<button class="card" type="button" data-produto="' + indice + '">' +
       '<div class="card__midia">' +
-      midia(p.imagem, p.nome) +
+      midia(capaDaPeca(p), p.nome) +
       (p.novo ? '<span class="card__selo">Novidade</span>' : "") +
+      seloMidias(p) +
       "</div>" +
       '<div class="card__corpo">' +
       '<h3 class="card__nome">' + p.nome + "</h3>" +
-      '<div class="card__preco">' +
-      (texto
-        ? texto + "<small>" + rotulo + "</small>"
-        : "Consultar<small>Valores no WhatsApp</small>") +
-      "</div></div></button>"
+      '<div class="card__preco">Consulte<small>' + CONSULTA + "</small></div>" +
+      "</div></button>"
     );
   }
 
@@ -300,6 +331,164 @@
 
   /* ---------- Modal do produto ------------------------------ */
 
+  /* ---------- Galeria de fotos e vídeos --------------------- */
+  /* Usada em três lugares: dentro do modal da peça, no visor de
+     tela cheia e nas fotos da loja. Rola com scroll-snap, então no
+     celular é só arrastar com o dedo; setas e pontos são para o
+     computador. Vídeo só carrega quando a cliente aperta o play
+     (preload="none"): são 11 vídeos, e baixar todos de uma vez
+     travaria o site no 4G.                                       */
+
+  const SETA_ESQ =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' +
+    '<path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const SETA_DIR =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' +
+    '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function galeriaHTML(itens, alt) {
+    if (!itens.length) return reservado();
+
+    const slides = itens
+      .map(function (m, i) {
+        const rotulo = m.legenda || alt + " — " + (m.tipo === "video" ? "vídeo" : "foto " + (i + 1));
+        const conteudo =
+          m.tipo === "video"
+            ? '<video src="' + m.src + '" poster="' + m.capa + '" controls playsinline ' +
+              'preload="none" aria-label="' + rotulo + '"></video>'
+            : '<img src="' + m.src + '" alt="' + rotulo + '"' + (i ? ' loading="lazy"' : "") + ">";
+        return (
+          '<div class="galeria__item galeria__item--' + m.tipo + '" data-i="' + i + '">' +
+          conteudo + "</div>"
+        );
+      })
+      .join("");
+
+    if (itens.length === 1) {
+      return '<div class="galeria"><div class="galeria__trilho">' + slides + "</div></div>";
+    }
+
+    const pontos = itens
+      .map(function (m, i) {
+        return (
+          '<button type="button" class="galeria__ponto' +
+          (m.tipo === "video" ? " galeria__ponto--video" : "") +
+          '" data-ir="' + i + '" aria-label="Ver ' +
+          (m.tipo === "video" ? "vídeo" : "foto " + (i + 1)) + '"></button>'
+        );
+      })
+      .join("");
+
+    return (
+      '<div class="galeria">' +
+      '<div class="galeria__trilho" tabindex="0">' + slides + "</div>" +
+      '<button type="button" class="galeria__seta galeria__seta--ant" aria-label="Anterior">' + SETA_ESQ + "</button>" +
+      '<button type="button" class="galeria__seta galeria__seta--prox" aria-label="Próxima">' + SETA_DIR + "</button>" +
+      '<div class="galeria__pontos">' + pontos + "</div>" +
+      '<span class="galeria__conta" aria-live="polite"></span>' +
+      "</div>"
+    );
+  }
+
+  function pausarVideos(raiz) {
+    $$("video", raiz).forEach(function (v) { if (!v.paused) v.pause(); });
+  }
+
+  // Liga setas, pontos e contador. Devolve irPara(i) para quem abriu.
+  function ligarGaleria(raiz) {
+    const gal = raiz.querySelector(".galeria");
+    if (!gal) return function () {};
+    const trilho = gal.querySelector(".galeria__trilho");
+    const itens = Array.prototype.slice.call(trilho.children);
+    const conta = gal.querySelector(".galeria__conta");
+    const ant = gal.querySelector(".galeria__seta--ant");
+    const prox = gal.querySelector(".galeria__seta--prox");
+    const pontos = $$(".galeria__ponto", gal);
+    let atual = -1;
+
+    function indice() {
+      return Math.round(trilho.scrollLeft / (trilho.clientWidth || 1));
+    }
+
+    function irPara(i, suave) {
+      const alvo = Math.max(0, Math.min(i, itens.length - 1));
+      trilho.scrollTo({
+        left: alvo * trilho.clientWidth,
+        behavior: suave === false ? "auto" : "smooth",
+      });
+    }
+
+    function atualizar() {
+      const i = indice();
+      if (i === atual) return;
+      atual = i;
+      pausarVideos(gal);   // trocou de slide, o vídeo anterior para
+      pontos.forEach((b, n) => b.setAttribute("aria-current", String(n === i)));
+      const eVideo = !!itens[i] && itens[i].classList.contains("galeria__item--video");
+      gal.classList.toggle("galeria--no-video", eVideo);
+      if (conta) conta.textContent = eVideo ? "Vídeo" : i + 1 + " / " + itens.length;
+      if (ant) ant.disabled = i <= 0;
+      if (prox) prox.disabled = i >= itens.length - 1;
+    }
+
+    if (ant) ant.addEventListener("click", () => irPara(indice() - 1));
+    if (prox) prox.addEventListener("click", () => irPara(indice() + 1));
+    pontos.forEach((b) =>
+      b.addEventListener("click", () => irPara(Number(b.dataset.ir)))
+    );
+
+    trilho.addEventListener("keydown", function (ev) {
+      if (ev.key === "ArrowRight") { ev.preventDefault(); irPara(indice() + 1); }
+      if (ev.key === "ArrowLeft")  { ev.preventDefault(); irPara(indice() - 1); }
+    });
+
+    let esperando = false;
+    trilho.addEventListener("scroll", function () {
+      if (esperando) return;
+      esperando = true;
+      window.requestAnimationFrame(function () { atualizar(); esperando = false; });
+    }, { passive: true });
+
+    atualizar();
+    return irPara;
+  }
+
+  /* ---------- Visor em tela cheia --------------------------- */
+  /* Abre por cima de tudo. No modal a foto fica pequena de
+     propósito (o botão do WhatsApp precisa aparecer), então quem
+     quer ver o detalhe do tecido toca na foto e ela abre inteira. */
+
+  let visorIrPara = null;
+  let focoAntesDoVisor = null;
+
+  function abrirVisor(itens, alt, inicio) {
+    const visor = $("#visor");
+    if (!visor || !itens.length) return;
+    focoAntesDoVisor = document.activeElement;
+    $("#visorMidia").innerHTML = galeriaHTML(itens, alt);
+    visor.dataset.aberto = "true";
+    document.body.classList.add("travado");
+    visorIrPara = ligarGaleria($("#visorMidia"));
+    visorIrPara(inicio || 0, false);
+    const trilho = $("#visorMidia .galeria__trilho");
+    if (trilho) trilho.focus({ preventScroll: true });
+  }
+
+  function fecharVisor() {
+    const visor = $("#visor");
+    if (!visor || visor.dataset.aberto !== "true") return false;
+    pausarVideos(visor);
+    visor.dataset.aberto = "false";
+    $("#visorMidia").innerHTML = "";
+    visorIrPara = null;
+    // Se o modal da peça continua aberto por baixo, a página segue travada
+    if ($("#modal").dataset.aberto !== "true") document.body.classList.remove("travado");
+    if (focoAntesDoVisor && focoAntesDoVisor.focus) focoAntesDoVisor.focus({ preventScroll: true });
+    return true;
+  }
+
+  /* ---------- Modal do produto ------------------------------ */
+
   let produtoAberto = null;
 
   function abrirModal(indice) {
@@ -307,19 +496,22 @@
     if (!p) return;
     produtoAberto = p;
 
-    const valor = modo === "atacado" ? p.precoAtacado : p.preco;
-    const texto = preco(valor);
+    const itens = midiasDaPeca(p);
+    const alvo = $("#modalMidia");
+    alvo.innerHTML = galeriaHTML(itens, p.nome);
+    ligarGaleria(alvo);
 
-    $("#modalMidia").innerHTML = midia(p.imagem, p.nome);
+    // Tocar na foto abre em tela cheia, no mesmo ponto da sequência
+    $$(".galeria__item--foto", alvo).forEach(function (el) {
+      el.addEventListener("click", function () {
+        abrirVisor(itens, p.nome, Number(el.dataset.i));
+      });
+    });
+
     $("#modalCategoria").textContent = p.categoria;
     $("#modalNome").textContent = p.nome;
-    $("#modalPreco").innerHTML = texto
-      ? texto + ' <small style="font-size:.7rem;letter-spacing:.14em;' +
-        'text-transform:uppercase;color:var(--tinta-suave)">' +
-        (modo === "atacado" ? "atacado" : "varejo") + "</small>"
-      : "Consultar valores";
+    $("#modalPreco").textContent = "Consulte tamanhos e valores";
     $("#modalDescricao").textContent = p.descricao || "";
-    $("#modalTamanhos").textContent = p.tamanhos || "Consultar";
     $("#modalAtacado").textContent =
       LOJA.atacado.grade || "Grade e condições combinadas no WhatsApp";
     $("#modalPolitica").textContent = LOJA.politicaTrocas || "";
@@ -332,7 +524,10 @@
     const modal = $("#modal");
     modal.dataset.aberto = "true";
     document.body.classList.add("travado");
-    $("#modalZap").focus();
+    // Abre sempre do topo, com a foto à vista. Sem preventScroll o
+    // foco no botão rolava a folha para baixo e cortava a foto.
+    $(".modal__caixa").scrollTop = 0;
+    $("#modalZap").focus({ preventScroll: true });
 
     evento(
       "ViewContent",
@@ -340,8 +535,6 @@
         content_name: p.nome,
         content_category: p.categoria,
         content_type: "product",
-        value: valor || 0,
-        currency: "BRL",
         modo: modo,
       },
       true
@@ -349,6 +542,8 @@
   }
 
   function fecharModal() {
+    pausarVideos($("#modal"));
+    $("#modalMidia").innerHTML = "";   // solta o vídeo, se estava tocando
     $("#modal").dataset.aberto = "false";
     document.body.classList.remove("travado");
     produtoAberto = null;
@@ -363,7 +558,7 @@
         "de confecção de Goiás. Grade que gira, com novidade toda semana.",
       catalogo:
         "Uma amostra do que você leva para a sua loja. Clique na peça para ver " +
-        "os detalhes e pedir o valor de atacado no WhatsApp.",
+        "todas as fotos e vídeos e pedir tamanhos e valor de atacado no WhatsApp.",
       tituloFinal: "Pronta para renovar o estoque da sua loja?",
       textoFinal:
         "Chame a gente no WhatsApp e receba as novidades da semana com preço de " +
@@ -374,8 +569,8 @@
         "Vestido de festa, body, peça country e look elegante escolhidos a dedo. " +
         "Venha conhecer a loja no Goiás Center Modas ou chame no WhatsApp.",
       catalogo:
-        "Uma amostra do que você encontra na loja. Clique na peça para ver os " +
-        "detalhes e falar com a gente no WhatsApp.",
+        "Uma amostra do que você encontra na loja. Clique na peça para ver " +
+        "todas as fotos e vídeos e consultar tamanhos e valores no WhatsApp.",
       tituloFinal: "Achou a peça certa?",
       textoFinal:
         "Chame a gente no WhatsApp para conferir tamanho e disponibilidade, ou " +
@@ -439,7 +634,6 @@
       { rotulo: "Pedido mínimo", valor: LOJA.atacado.pedidoMinimo },
       { rotulo: "Pagamento", valor: LOJA.atacado.formasPagamento },
       { rotulo: "Envio", valor: LOJA.atacado.envio },
-      { rotulo: "Grade", valor: LOJA.atacado.grade },
     ];
 
     alvo.innerHTML = itens
@@ -705,53 +899,80 @@
     if (ano) ano.textContent = new Date().getFullYear();
   }
 
+  /* ---------- Fotos da loja --------------------------------- */
+  /* Seção "A loja". As duas primeiras fotos ficam ao lado do texto
+     (a principal grande e a segunda sobreposta no canto); as outras
+     formam a faixa "Por dentro da loja" logo abaixo. Qualquer uma
+     abre no visor de tela cheia, e dali dá para passar por todas.  */
+
+  function montarGaleriaLoja(lista) {
+    const sobre = $("[data-foto-sobre]");
+    const faixa = $("#galeriaLoja");
+    const itens = lista.map((f) => ({ tipo: "foto", src: f.src, legenda: f.legenda }));
+
+    function botao(f, i, classe) {
+      return (
+        '<button type="button" class="' + classe + '" data-foto-loja="' + i + '" ' +
+        'aria-label="Ampliar: ' + f.legenda + '">' +
+        '<img src="' + f.src + '" alt="' + f.legenda + '" loading="lazy"></button>'
+      );
+    }
+
+    if (sobre) {
+      if (lista.length) {
+        sobre.classList.add("loja-galeria");   // add, não substitui:
+        sobre.classList.remove("duplo__midia"); // senão apaga "revela"
+        sobre.innerHTML =
+          botao(lista[0], 0, "loja-galeria__principal") +
+          (lista[1] ? botao(lista[1], 1, "loja-galeria__inset") : "");
+      } else {
+        sobre.innerHTML = reservado("Foto da loja");
+      }
+    }
+
+    if (faixa) {
+      const resto = lista.slice(2);
+      if (resto.length) {
+        faixa.innerHTML = resto
+          .map((f, i) => botao(f, i + 2, "loja-foto"))
+          .join("");
+      } else {
+        const bloco = $(".por-dentro");
+        if (bloco) bloco.hidden = true;
+      }
+    }
+
+    document.addEventListener("click", function (ev) {
+      const b = ev.target.closest("[data-foto-loja]");
+      if (!b) return;
+      abrirVisor(itens, "Loja CAUST", Number(b.dataset.fotoLoja));
+      evento("ViuFotoLoja", { foto: Number(b.dataset.fotoLoja) + 1 });
+    });
+  }
+
   /* ---------- Fotos do hero --------------------------------- */
 
   function montarHero() {
     const fotos = LOJA.fotos || {};
 
     // Mosaico do topo: usa as peças em destaque que já têm foto.
-    const comFoto = PRODUTOS.filter((p) => p.destaque && p.imagem);
+    const comFoto = PRODUTOS.filter((p) => p.destaque && capaDaPeca(p));
 
     $$("[data-foto-hero]").forEach(function (slot, i) {
       const p = comFoto[i];
       slot.innerHTML = p
-        ? '<img src="' + p.imagem + '" alt="' + p.nome + '">'
+        ? '<img src="' + capaDaPeca(p) + '" alt="' + p.nome + '">'
         : reservado("Foto " + (i + 1));
     });
 
-    // Seção "A loja": foto da fachada como principal e, sobreposta
-    // num canto, a foto de dentro. A segunda entra pequena de
-    // propósito — é onde a resolução dela se sustenta.
-    const sobre = $("[data-foto-sobre]");
-    if (sobre) {
-      if (fotos.loja || fotos.interior) {
-        sobre.classList.add("loja-galeria");   // add, não substitui:
-        sobre.classList.remove("duplo__midia"); // senão apaga "revela"
-        sobre.innerHTML =
-          (fotos.loja
-            ? '<div class="loja-galeria__principal">' +
-              '<img src="' + fotos.loja + '" ' +
-              'alt="Fachada da loja CAUST, sala 108 do Goiás Center Modas">' +
-              "</div>"
-            : "") +
-          (fotos.interior
-            ? '<div class="loja-galeria__inset">' +
-              '<img src="' + fotos.interior + '" ' +
-              'alt="Interior da loja CAUST, com as araras e a mesa de peças">' +
-              "</div>"
-            : "");
-      } else {
-        sobre.innerHTML = reservado("Foto da loja");
-      }
-    }
+    montarGaleriaLoja(fotos.galeriaLoja || []);
 
     // Faixa larga da loja. Fica desligada até existir uma foto de
     // pelo menos 1200px de largura: esticada, foto pequena borra.
     const faixa = $("#faixaLoja");
     const faixaImg = $("#faixaImg");
     if (faixa && faixaImg && fotos.faixaLarga) {
-      faixaImg.src = fotos.interior;
+      faixaImg.src = fotos.faixaLarga;
       faixa.hidden = false;
     }
 
@@ -834,8 +1055,15 @@
       el.addEventListener("click", fecharModal)
     );
 
+    // Fechar visor de tela cheia
+    $$("[data-fechar-visor]").forEach((el) =>
+      el.addEventListener("click", fecharVisor)
+    );
+
     document.addEventListener("keydown", function (ev) {
       if (ev.key !== "Escape") return;
+      // O visor fica por cima do modal: o Esc fecha só ele primeiro
+      if (fecharVisor()) return;
       if ($("#modal").dataset.aberto === "true") fecharModal();
       if (menu && menu.dataset.aberto === "true") estadoMenu(false);
     });

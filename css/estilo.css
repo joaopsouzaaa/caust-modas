@@ -2133,3 +2133,348 @@ body.travado { overflow: hidden; }
 }
 
 .carrossel__trilho.arrastando img { pointer-events: none; }
+
+/* ==============================================================
+   FOTOS E VÍDEOS DA PEÇA
+   --------------------------------------------------------------
+   Selo no card, galeria dentro do modal e visor de tela cheia.
+   A galeria rola com scroll-snap: no celular a cliente arrasta a
+   foto com o dedo, como no Instagram. Setas e pontos são para o
+   computador.
+   ============================================================== */
+
+/* Selo "3 fotos · vídeo" no canto do card */
+.card__qtd {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.62);
+  color: #ffffff;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.card__qtd svg { width: 12px; height: 12px; }
+.card__qtd svg:not(:first-child) { margin-left: 0.3rem; }
+
+/* ---- Galeria ------------------------------------------------ */
+
+.galeria {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.galeria__trilho {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+.galeria__trilho::-webkit-scrollbar { display: none; }
+.galeria__trilho:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
+
+.galeria__item {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  background: var(--papel-2);
+}
+
+.galeria__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Vídeo inteiro, sem cortar cabeça nem pé: fundo preto nas laterais */
+.galeria__item--video { background: #000000; }
+.galeria__item video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000000;
+}
+
+.modal .galeria__item--foto { cursor: zoom-in; }
+
+.galeria__seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+  transition: var(--transicao);
+  z-index: 1;
+}
+.galeria__seta svg { width: 18px; height: 18px; }
+.galeria__seta--ant { left: 0.6rem; }
+.galeria__seta--prox { right: 0.6rem; }
+.galeria__seta:hover:not(:disabled) { background: #ffffff; }
+.galeria__seta:disabled { opacity: 0; pointer-events: none; }
+
+.galeria__pontos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.6rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.1rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Área de toque de 22px, bolinha de 7px */
+.galeria__ponto {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.galeria__ponto::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
+  transition: var(--transicao);
+}
+/* O ponto do vídeo é um triângulo de play */
+.galeria__ponto--video::before {
+  border-radius: 0;
+  width: 0;
+  height: 0;
+  background: transparent;
+  box-shadow: none;
+  border-left: 8px solid rgba(255, 255, 255, 0.7);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.galeria__ponto[aria-current="true"]::before { background: #ffffff; transform: scale(1.3); }
+.galeria__ponto--video[aria-current="true"]::before {
+  background: transparent;
+  border-left-color: #ffffff;
+}
+
+.galeria__conta {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  z-index: 1;
+  pointer-events: none;
+}
+.galeria__conta:empty { display: none; }
+
+/* Quando o slide atual é vídeo, os pontos sobem para não tapar a
+   barra de controles dele. A classe é posta pelo app.js. */
+.galeria--no-video .galeria__pontos { bottom: 3.4rem; }
+
+.modal__midia { position: relative; }
+
+/* Sem preço no site: a linha vira um aviso, menor que o antigo valor */
+.modal__preco { font-size: 1.3rem; line-height: 1.3; margin-top: 0.3rem; }
+
+/* No visor o foco vai para a foto só para as setas do teclado
+   funcionarem; a moldura dourada em volta da tela inteira sobra. */
+.visor .galeria__trilho:focus-visible { outline: none; }
+
+@media (max-width: 760px) {
+  /* No celular arrasta com o dedo: as setas só tapam a foto */
+  .modal .galeria__seta { display: none; }
+}
+
+/* No celular a foto do modal tinha 42vh de altura: numa tela de
+   390px isso deixava a caixa quase quadrada, e o recorte de uma foto
+   3:4 comia a cabeça da modelo. Agora a caixa chega perto do 3:4
+   (133vw) sem passar de 62% da tela, e o que sobrar de recorte sai
+   de baixo, nunca de cima. O botão do WhatsApp fica logo abaixo,
+   a um toque de rolagem. */
+@media (max-width: 700px) {
+  .modal__midia { height: min(62vh, 133vw); }
+  .modal .galeria__item img { object-position: 50% 12%; }
+}
+
+/* ---- Visor em tela cheia ------------------------------------ */
+
+.visor {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+}
+.visor[data-aberto="true"] { display: block; }
+
+.visor__fundo {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+}
+
+.visor__midia {
+  position: absolute;
+  inset: 0;
+}
+
+.visor .galeria__item,
+.visor .galeria__item--video,
+.visor .galeria__item video { background: transparent; }
+.visor .galeria__item img { object-fit: contain; }
+.visor .galeria__pontos { bottom: max(1rem, env(safe-area-inset-bottom)); }
+.visor .galeria--no-video .galeria__pontos { bottom: 4.5rem; }
+.visor .galeria__conta { top: max(1rem, env(safe-area-inset-top)); left: 1rem; }
+.visor .galeria__seta--ant { left: 1rem; }
+.visor .galeria__seta--prox { right: 1rem; }
+
+.visor__fechar {
+  position: absolute;
+  top: max(0.8rem, env(safe-area-inset-top));
+  right: 0.8rem;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transicao);
+}
+.visor__fechar:hover { background: rgba(255, 255, 255, 0.28); }
+.visor__fechar svg { width: 22px; height: 22px; }
+
+/* ==============================================================
+   SEÇÃO "A LOJA" — galeria da loja física
+   --------------------------------------------------------------
+   As fotos agora têm 960px de largura, então a principal e a
+   sobreposta seguram bem o tamanho. Viraram botões: tocando,
+   abrem no visor de tela cheia.
+   ============================================================== */
+
+.loja-galeria__principal,
+.loja-galeria__inset,
+.loja-foto {
+  padding: 0;
+  font: inherit;
+  cursor: zoom-in;
+  display: block;
+}
+.loja-galeria__principal { border: 0; width: 100%; }
+.loja-galeria__principal img,
+.loja-galeria__inset img { transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1); }
+.loja-galeria__principal:hover img,
+.loja-galeria__inset:hover img { transform: scale(1.03); }
+
+.lista-check--loja { margin-top: 1.4rem; }
+
+.loja__urgencia {
+  margin: 1.5rem 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--acento);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--tinta);
+}
+
+#sobre p em { font-style: italic; color: var(--acento-texto); }
+
+.por-dentro { margin-top: clamp(3rem, 7vw, 5rem); }
+.por-dentro[hidden] { display: none; }
+
+.por-dentro__topo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+.por-dentro__topo h3 { margin: 0; font-size: clamp(1.05rem, 2.4vw, 1.35rem); }
+.por-dentro__topo span {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+/* No computador as cinco cabem lado a lado; no celular rolam
+   na horizontal e sangram até a borda, como o catálogo. */
+.por-dentro__trilho {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: clamp(0.7rem, 1.8vw, 1.2rem);
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.loja-foto {
+  border: 0;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--raio);
+  background: var(--papel-2);
+}
+.loja-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.loja-foto:hover img { transform: scale(1.04); }
+
+.loja-galeria__principal:focus-visible,
+.loja-galeria__inset:focus-visible,
+.loja-foto:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .por-dentro__topo { flex-wrap: wrap; row-gap: 0.2rem; }
+  .por-dentro__trilho {
+    grid-auto-columns: clamp(150px, 44vw, 220px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    padding-block: 2px;
+  }
+  .por-dentro__trilho::-webkit-scrollbar { display: none; }
+  .loja-foto { scroll-snap-align: start; }
+}

@@ -38,7 +38,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/estilo.css?v=7fb37c0b" />
+  <link rel="stylesheet" href="css/estilo.css?v=4d9319cf" />
 </head>
 <body>
 
@@ -247,8 +247,8 @@
         <span class="olho">Coleção</span>
         <h2>O que temos disponível agora</h2>
         <p data-texto-catalogo>
-          Uma amostra do que você encontra na loja. Clique na peça para ver os
-          detalhes e chamar a gente no WhatsApp.
+          Uma amostra do que você encontra na loja. Clique na peça para ver
+          todas as fotos e vídeos e consultar tamanhos e valores no WhatsApp.
         </p>
       </div>
 
@@ -341,33 +341,67 @@
   </section>
 
   <!-- ============ SOBRE ============ -->
+  <!-- As fotos vêm de LOJA.fotos.galeriaLoja, em dados.js -->
   <section class="secao" id="sobre">
     <div class="container duplo">
       <div class="duplo__midia revela" data-foto-sobre></div>
       <div class="revela">
-        <span class="olho">A loja</span>
-        <h2>A CAUST nasceu no meio da moda goiana</h2>
+        <span class="olho">A loja · Sala 108</span>
+        <h2>Foto mostra a peça. O provador mostra você nela.</h2>
         <p>
-          Estamos na sala 108 do Goiás Center Modas, em Goiânia, cercadas pelo
-          que há de mais novo na confecção do Centro-Oeste. Isso significa que a
-          peça chega na nossa arara antes de virar tendência na sua cidade.
+          No site você escolhe. Aqui na loja você <em>tem certeza</em>. Sente o
+          tecido na mão, vê o caimento no espelho iluminado e sai sabendo que o
+          look ficou do jeito que você imaginou.
         </p>
         <p>
-          Atendemos quem compra uma peça para arrasar no fim de semana e quem
-          leva dez para revender na segunda. Os dois recebem a mesma atenção.
-        </p>
-        <p>
-          Se você está em Goiânia, passe na loja. Se está longe, é só chamar no
-          WhatsApp que a gente manda foto e vídeo de tudo.
+          Montamos a CAUST para você se sentir em casa: vitrine que muda toda
+          semana, arara cheia, poltronas para esperar a amiga, ar-condicionado e
+          um atendimento que ajuda de verdade e fala com sinceridade quando a
+          peça não ficou boa.
         </p>
 
-        <div class="chamada__acoes" style="justify-content:flex-start; margin-top:1.8rem">
+        <ul class="lista-check lista-check--loja">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Peças que chegam na arara antes de irem para o site e o Instagram</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Todas as cores e tamanhos à mão para provar na hora</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Ajuda para montar o look e acertar o tamanho sem erro</span>
+          </li>
+          <li class="so-atacado">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Lojista: escolha a sua grade peça por peça, vendo a qualidade de perto</span>
+          </li>
+        </ul>
+
+        <p class="loja__urgencia">
+          Novidade chega toda semana, e as mais procuradas saem rápido.
+          Venha escolher antes de todo mundo.
+        </p>
+
+        <div class="chamada__acoes" style="justify-content:flex-start; margin-top:1.4rem">
+          <a href="#local" class="btn btn--principal">Quero visitar a loja</a>
           <a href="#" class="btn btn--contorno" data-instagram>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
             Ver o Instagram
           </a>
         </div>
       </div>
+    </div>
+
+    <!-- Por dentro da loja: o resto da galeria, rolando na horizontal
+         no celular. Sangra até a borda, igual às faixas do catálogo. -->
+    <div class="por-dentro">
+      <div class="container por-dentro__topo revela">
+        <h3>Por dentro da CAUST</h3>
+        <span>Toque na foto para ampliar</span>
+      </div>
+      <div class="por-dentro__trilho revela" id="galeriaLoja"></div>
     </div>
   </section>
 
@@ -546,7 +580,11 @@
 
       <div class="modal__linha">
         <strong>Tamanhos</strong>
-        <span id="modalTamanhos"></span>
+        <span>Consulte no WhatsApp</span>
+      </div>
+      <div class="modal__linha">
+        <strong>Valores</strong>
+        <span>Consulte no WhatsApp</span>
       </div>
       <div class="modal__linha so-atacado">
         <strong>Atacado</strong>
@@ -567,7 +605,20 @@
   </div>
 </div>
 
-<script src="js/dados.js?v=25a37581"></script>
-<script src="js/app.js?v=4fc82448"></script>
+<!-- ============ VISOR EM TELA CHEIA ============ -->
+<!-- Fotos e vídeos ampliados: da peça (tocando na foto do modal)
+     e da loja (tocando em qualquer foto da seção "A loja"). -->
+<div class="visor" id="visor" data-aberto="false" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <div class="visor__fundo" data-fechar-visor></div>
+  <button class="visor__fechar" type="button" data-fechar-visor aria-label="Fechar foto ampliada">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="visor__midia" id="visorMidia"></div>
+</div>
+
+<script src="js/dados.js?v=7c5552b5"></script>
+<script src="js/app.js?v=cd63a532"></script>
 </body>
 </html>
