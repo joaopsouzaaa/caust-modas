@@ -9,13 +9,10 @@
 
   /* ---------- Estado ---------------------------------------- */
 
-  let modo = "atacado";           // "atacado" | "varejo"
+  // O site sempre abre em "Para mim". Quem é lojista troca no seletor;
+  // a escolha não fica salva, então a próxima visita volta ao varejo.
+  let modo = "varejo";            // "atacado" | "varejo"
   let categoriaAtiva = "Todos";
-
-  try {
-    const salvo = localStorage.getItem("caust_modo");
-    if (salvo === "atacado" || salvo === "varejo") modo = salvo;
-  } catch (e) { /* navegação privada: segue com o padrão */ }
 
   /* ---------- Tema claro / escuro --------------------------- */
   /* Três estados:
@@ -570,7 +567,7 @@
       selo3v: "Transportadora",
       selo4r: "Loja física",
       selo4v: "Sala 108",
-      dica: "Mínimo de 6 peças · pagamento no cartão, dinheiro ou Pix",
+      dica: "Mínimo de 6 peças · pagamento no cartão, dinheiro, Pix ou boleto",
       v1t: "Preço de fábrica, margem de verdade",
       v1p:
         "Estamos dentro do Goiás Center Modas, o polo de confecção de Goiânia. " +
@@ -702,8 +699,6 @@
   function aplicarModo(novo, avisar) {
     modo = novo;
     document.documentElement.dataset.modo = modo;
-
-    try { localStorage.setItem("caust_modo", modo); } catch (e) { /* ok */ }
 
     $$("[data-modo-btn]").forEach((b) =>
       b.setAttribute("aria-pressed", String(b.dataset.modoBtn === modo))
@@ -994,10 +989,15 @@
 
     // Contato — só mostra o que já estiver preenchido em dados.js
     const linhas = [];
-    if (LOJA.whatsapp.atacado.visivel)
-      linhas.push("<strong>Atacado</strong> " + LOJA.whatsapp.atacado.visivel);
-    if (LOJA.whatsapp.varejo.visivel)
-      linhas.push("<strong>Varejo</strong> " + LOJA.whatsapp.varejo.visivel);
+    const zapAtacado = LOJA.whatsapp.atacado.visivel;
+    const zapVarejo = LOJA.whatsapp.varejo.visivel;
+    // Mesmo número nos dois canais: mostra uma linha só
+    if (zapAtacado && zapAtacado === zapVarejo) {
+      linhas.push("<strong>WhatsApp</strong> " + zapAtacado);
+    } else {
+      if (zapAtacado) linhas.push("<strong>Atacado</strong> " + zapAtacado);
+      if (zapVarejo) linhas.push("<strong>Varejo</strong> " + zapVarejo);
+    }
     if (LOJA.email) linhas.push(LOJA.email);
     linhas.push("@" + LOJA.instagram);
 

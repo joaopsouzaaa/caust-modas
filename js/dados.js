@@ -22,13 +22,13 @@ const LOJA = {
   //   mas NÃO consegue preencher a mensagem automaticamente.
   whatsapp: {
     atacado: {
-      numero: "",                                      // <<< PREENCHER
-      visivel: "",                                     // <<< PREENCHER ex: (62) 99999-8888
+      numero: "5562984222862",
+      visivel: "(62) 98422-2862",
       linkCurto: "https://wa.me/message/3ZA3O7RIP27JK1", // "Caust 2" do Linktree
     },
     varejo: {
-      numero: "",                                      // <<< PREENCHER
-      visivel: "",                                     // <<< PREENCHER
+      numero: "5562984222862",
+      visivel: "(62) 98422-2862",
       linkCurto: "https://wa.me/message/4YOBBJRAHBXCC1", // "Caust" do Linktree
     },
   },
@@ -62,7 +62,7 @@ const LOJA = {
   // Responder isso no site reduz muito o custo por lead no Meta Ads.
   atacado: {
     pedidoMinimo: "Mínimo de 6 peças",
-    formasPagamento: "Cartão, dinheiro e Pix",
+    formasPagamento: "Cartão, dinheiro, Pix e boleto",
     envio: "Feito por transportadoras",
     grade: "",               // <<< PREENCHER ex: "Grade fechada P/M/G ou peças avulsas"
     catalogoLink: "",        // <<< PREENCHER link do catálogo/Drive, se existir
@@ -138,17 +138,14 @@ const LOJA = {
   politicaTrocas: "Não realizamos trocas.",
 
   // --- Mensagens automáticas do WhatsApp -----------------------
+  // Botão de uma peça leva o nome dela junto, para a loja saber
+  // de qual peça a cliente está falando. Todos os outros botões de
+  // WhatsApp do site usam a mesma mensagem geral.
   mensagens: {
-    atacado:
-      "Olá! Vim pelo site da CAUST e quero comprar no ATACADO. Pode me passar as condições?",
-    varejo:
-      "Olá! Vim pelo site da CAUST e gostaria de mais informações.",
-    produto: (nome, modo) =>
-      modo === "atacado"
-        ? `Olá! Vim pelo site da CAUST. Tenho interesse na peça "${nome}" para ATACADO. Qual o valor e a grade?`
-        : `Olá! Vim pelo site da CAUST e gostei da peça "${nome}". Quais tamanhos vocês têm e qual o valor?`,
-    novidades:
-      "Olá! Quero receber as novidades da semana da CAUST.",
+    atacado: "Olá, vim pelo site e tenho interesse nas peças.",
+    varejo: "Olá, vim pelo site e tenho interesse nas peças.",
+    produto: (nome) => `Olá, tenho interesse nessa peça: ${nome}`,
+    novidades: "Olá, vim pelo site e tenho interesse nas peças.",
   },
 
   // --- Meta Ads ------------------------------------------------
