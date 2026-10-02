@@ -1027,6 +1027,9 @@
     const politica = $("#politica");
     if (politica) politica.textContent = LOJA.politicaTrocas || "";
 
+    const cnpj = $("#cnpj");
+    if (cnpj && LOJA.cnpj) cnpj.textContent = " · CNPJ " + LOJA.cnpj;
+
     const ano = $("#ano");
     if (ano) ano.textContent = new Date().getFullYear();
   }

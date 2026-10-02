@@ -34,6 +34,10 @@ const LOJA = {
   },
 
   instagram: "caust_modas",
+
+  // Aparece no rodapé. O decreto do comércio eletrônico
+  // (Decreto 7.962/2013) pede o CNPJ visível no site.
+  cnpj: "31.872.164/0001-32",
   email: "",                                           // <<< PREENCHER (ou deixe "")
 
   // --- Loja física ---------------------------------------------
