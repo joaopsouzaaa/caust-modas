@@ -1194,6 +1194,17 @@
       });
     }
 
+    // Logo (cabeçalho e rodapé) sobe para o topo da página. Só o
+    // href="#topo" não basta: o cabeçalho é sticky, então o navegador
+    // acha que ele já está à vista e não rola nada.
+    $$(".marca").forEach(function (el) {
+      el.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+      });
+    });
+
     // Foto do topo
     document.addEventListener("click", function (ev) {
       const b = ev.target.closest("[data-foto-topo]");
