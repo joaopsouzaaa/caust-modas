@@ -53,11 +53,9 @@ const LOJA = {
   enderecoBusca:
     "Goiás Center Modas, Av. Goiás Norte, 4066, Setor Crimeia Oeste, Goiânia - GO",
 
-  // Horários do shopping Goiás Center Modas.        <<< CONFIRMAR
-  // Se a CAUST tiver horário próprio diferente, ajustar aqui.
+  // Horário da CAUST, confirmado com a cliente em 04/10/2026.
   horarios: [
-    { dias: "Segunda a sexta", horas: "08h às 18h" },
-    { dias: "Sábado", horas: "08h às 12h" },
+    { dias: "Segunda a sábado", horas: "08h às 17h" },
     { dias: "Domingo", horas: "Fechado" },
   ],
 
@@ -116,8 +114,7 @@ const LOJA = {
 
   // --- Como funciona o atacado ---------------------------------
   // Aparece na coluna direita da seção de atacado.
-  // <<< CONFIRMAR com a cliente: escrevi o fluxo que é padrão em
-  // loja do Goiás Center Modas, mas o dela pode ser diferente.
+  // Confirmado com a cliente em 04/10/2026.
   passosAtacado: [
     {
       titulo: "Chame no WhatsApp",
