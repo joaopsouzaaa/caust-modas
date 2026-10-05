@@ -188,6 +188,13 @@
     );
   }
 
+  // Foto pequena para card, mosaico e faixas. A grande fica para a
+  // peça aberta e o visor. As miniaturas são geradas pelo
+  // ferramentas/gerar-miniaturas.py, chamado no preparar-deploy.py.
+  function mini(src) {
+    return src.replace(/^img\/(produtos|loja)\//, "img/$1/mini/");
+  }
+
   function midia(imagem, alt) {
     if (imagem) {
       return '<img src="' + imagem + '" alt="' + alt + '" loading="lazy">';
@@ -260,7 +267,7 @@
     return (
       '<button class="card" type="button" data-produto="' + indice + '">' +
       '<div class="card__midia">' +
-      midia(capaDaPeca(p), p.nome) +
+      midia(mini(capaDaPeca(p)), p.nome) +
       (p.novo ? '<span class="card__selo">Novidade</span>' : "") +
       seloMidias(p) +
       "</div>" +
@@ -650,7 +657,7 @@
       slot.innerHTML = f
         ? '<button type="button" class="hero__foto-btn" data-foto-topo="' + i + '" ' +
           'aria-label="Ver a peça: ' + f.alt + '">' +
-          '<img src="' + f.src + '" alt="' + f.alt + '"></button>'
+          '<img src="' + mini(f.src) + '" alt="' + f.alt + '"></button>'
         : reservado("Foto " + (i + 1));
     });
   }
@@ -1051,7 +1058,7 @@
       return (
         '<button type="button" class="' + classe + '" data-foto-loja="' + i + '" ' +
         'aria-label="Ampliar: ' + f.legenda + '">' +
-        '<img src="' + f.src + '" alt="' + f.legenda + '" loading="lazy"></button>'
+        '<img src="' + mini(f.src) + '" alt="' + f.legenda + '" loading="lazy"></button>'
       );
     }
 
@@ -1183,6 +1190,9 @@
     function estadoMenu(aberto) {
       menu.dataset.aberto = String(aberto);
       menu.setAttribute("aria-hidden", String(!aberto));
+      // Fechado, o menu sai da ordem do Tab: sem isso o teclado
+      // passava por links invisíveis fora da tela.
+      menu.inert = !aberto;
       document.body.classList.toggle("travado", aberto);
     }
 

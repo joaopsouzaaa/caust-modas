@@ -28,7 +28,11 @@
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Carrega sem bloquear a tela: o título aparece na hora com a
+       fonte do sistema e troca quando a Fraunces chega. Bloqueando,
+       o celular esperava quase 1 s a mais para mostrar o topo. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Jost:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Jost:wght@300;400;500&display=swap" /></noscript>
 
   <!-- Aplica o tema salvo ANTES da página pintar. Sem isto, quem
        escolheu escuro vê um flash branco a cada carregamento. -->
@@ -60,7 +64,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/estilo.css?v=04aa7dfa" />
+  <link rel="stylesheet" href="css/estilo.css?v=2d809ccd" />
 </head>
 <body>
 
@@ -108,7 +112,7 @@
 </header>
 
 <!-- Menu mobile -->
-<div class="menu-mobile" id="menuMobile" data-aberto="false" aria-hidden="true">
+<div class="menu-mobile" id="menuMobile" data-aberto="false" aria-hidden="true" inert>
   <div class="menu-mobile__topo">
     <button class="menu-mobile__fechar" type="button" id="fecharMenu" aria-label="Fechar menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -221,6 +225,7 @@
            mim" — inclusive o primeiro, logo abaixo do seletor, para a
            cliente ver a troca sem precisar rolar. Textos em TEXTOS,
            no app.js. -->
+      <h2 class="so-leitor">Por que comprar na CAUST</h2>
       <div class="vantagens troca-modo">
         <div class="vantagem revela">
           <div class="vantagem__icone">
@@ -306,7 +311,7 @@
   <!-- ============ FAIXA DA LOJA ============ -->
   <!-- Aparece só quando LOJA.fotos.interior estiver preenchido. -->
   <section class="faixa" id="faixaLoja" hidden>
-    <div class="faixa__foto"><img id="faixaImg" src="" alt="Interior da loja CAUST no Goiás Center Modas"></div>
+    <div class="faixa__foto"><img id="faixaImg" alt="Interior da loja CAUST no Goiás Center Modas"></div>
     <div class="container faixa__conteudo revela">
       <span class="olho">Sala 108 · Piso 1</span>
       <h2>Arara cheia o ano inteiro</h2>
@@ -569,7 +574,7 @@
       </div>
 
       <div>
-        <h4>Navegue</h4>
+        <h3>Navegue</h3>
         <ul>
           <li><a href="#colecao">Coleção</a></li>
           <li><a href="#atacado">Atacado</a></li>
@@ -579,7 +584,7 @@
       </div>
 
       <div>
-        <h4>Contato</h4>
+        <h3>Contato</h3>
         <ul id="rodapeContato"></ul>
       </div>
     </div>
@@ -592,7 +597,7 @@
 </footer>
 
 <!-- ============ BOTÃO FLUTUANTE ============ -->
-<a href="#" class="zap-flutuante" data-zap="flutuante" aria-label="Falar no WhatsApp">
+<a href="#" class="zap-flutuante" data-zap="flutuante" aria-label="Fale conosco no WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.25.69-1.45 1.32-2 1.4-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.61-1.21-3.07s.77-2.18 1.04-2.48c.27-.3.59-.37.79-.37.2 0 .39 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.02.96.3.15.49.22.56.35.07.12.07.72-.18 1.41z"/>
   </svg>
@@ -656,6 +661,6 @@
 </div>
 
 <script src="js/dados.js?v=76926e2b"></script>
-<script src="js/app.js?v=8e8020d7"></script>
+<script src="js/app.js?v=5c12db6c"></script>
 </body>
 </html>

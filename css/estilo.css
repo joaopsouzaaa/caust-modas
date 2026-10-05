@@ -323,7 +323,7 @@ main [id] { scroll-margin-top: clamp(92px, 13vw, 108px); }
 /* Usado sobre as seções pretas: dourado com texto preto. */
 .btn--claro {
   background: var(--acento);
-  color: var(--tinta);
+  color: #000000;
   border-color: var(--acento);
 }
 .btn--claro:hover {
@@ -349,17 +349,19 @@ main [id] { scroll-margin-top: clamp(92px, 13vw, 108px); }
    data-zap ja nasce verde, sem precisar mexer aqui.
    ---------------------------------------------------------- */
 
+/* #000 fixo, nao var(--tinta): no tema escuro --tinta vira quase
+   branco e o texto sumia no verde (1,77:1, achado pelo Lighthouse). */
 .btn[data-zap],
 #modalZap {
   background: var(--zap);
-  color: var(--tinta);
+  color: #000000;
   border-color: var(--zap);
 }
 
 .btn[data-zap]:hover,
 #modalZap:hover {
   background: var(--zap-hover);
-  color: var(--tinta);
+  color: #000000;
   border-color: var(--zap-hover);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
@@ -369,12 +371,12 @@ main [id] { scroll-margin-top: clamp(92px, 13vw, 108px); }
 .social a[data-zap] {
   background: var(--zap);
   border-color: var(--zap);
-  color: var(--tinta);
+  color: #000000;
 }
 .social a[data-zap]:hover {
   background: var(--zap-hover);
   border-color: var(--zap-hover);
-  color: var(--tinta);
+  color: #000000;
 }
 
 /* ---------- Cabeçalho ------------------------------------- */
@@ -1225,7 +1227,7 @@ main [id] { scroll-margin-top: clamp(92px, 13vw, 108px); }
 .rodape .marca__texto { color: var(--painel-titulo); }
 .rodape .marca__sub { color: var(--acento-claro); }
 
-.rodape h4 {
+.rodape h3 {
   font-family: var(--sans);
   font-size: 0.68rem;
   letter-spacing: 0.2em;
@@ -1281,7 +1283,7 @@ main [id] { scroll-margin-top: clamp(92px, 13vw, 108px); }
   align-items: center;
   gap: 0.7rem;
   background: var(--zap);
-  color: var(--tinta);
+  color: #000000;
   text-decoration: none;
   padding: 0.85rem 1.4rem;
   border-radius: 100px;
