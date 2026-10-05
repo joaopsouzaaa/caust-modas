@@ -691,7 +691,7 @@
   function precarregarOutroModo() {
     const topo = (LOJA.fotos && LOJA.fotos.topo) || {};
     const outro = topo[modo === "atacado" ? "varejo" : "atacado"] || [];
-    outro.forEach(function (f) { const im = new Image(); im.src = f.src; });
+    outro.forEach(function (f) { const im = new Image(); im.src = mini(f.src); });
   }
 
   // Pisca de leve o que mudou, para a troca ser percebida
