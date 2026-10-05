@@ -25,14 +25,12 @@
 
   <link rel="icon" href="img/marca/favicon.png" />
 
-  <!-- Fontes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Carrega sem bloquear a tela: o título aparece na hora com a
-       fonte do sistema e troca quando a Fraunces chega. Bloqueando,
-       o celular esperava quase 1 s a mais para mostrar o topo. -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Jost:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Jost:wght@300;400;500&display=swap" /></noscript>
+  <!-- Fontes: hospedadas no próprio site (css/estilo.css, @font-face).
+       O preload começa o download junto com o HTML, então a fonte
+       chega antes da primeira pintura e o topo não "pula" na troca. -->
+  <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/fraunces-italico.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/jost.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Aplica o tema salvo ANTES da página pintar. Sem isto, quem
        escolheu escuro vê um flash branco a cada carregamento. -->
@@ -64,7 +62,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/estilo.css?v=2d809ccd" />
+  <link rel="stylesheet" href="css/estilo.css?v=55676bed" />
 </head>
 <body>
 
